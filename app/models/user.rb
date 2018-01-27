@@ -12,6 +12,10 @@ class User < ApplicationRecord
   has_many :comments, dependent: :restrict_with_error
   has_many :restaurants, through: :comments
 
+  # 「使用者收藏很多餐廳」的多對多關聯
+  has_many :favorite, dependent: :destroy
+  has_many :favorite_restaurants, through: :favorites, source: :restaurant
+
   # admin? 讓我們用來判斷單個user是否有 admin 角色，列如：current_user.admin?
   def admin?
     self.role == "admin"
