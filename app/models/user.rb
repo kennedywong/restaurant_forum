@@ -13,7 +13,7 @@ class User < ApplicationRecord
   has_many :restaurants, through: :comments
 
   # 「使用者收藏很多餐廳」的多對多關聯
-  has_many :favorite, dependent: :destroy
+  has_many :favorites, dependent: :destroy
   has_many :favorite_restaurants, through: :favorites, source: :restaurant
 
   has_many :likes, dependent: :destroy
