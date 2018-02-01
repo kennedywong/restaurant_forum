@@ -53,6 +53,6 @@ class RestaurantsController < ApplicationController
 
   # GET /restaurants/ranking
   def ranking
-    @restaurants = Restaurant.order(favorite_count: :desc).limit(10)
+    @restaurants = Restaurant.order(favorites_count: :desc).limit(10)
   end
 end
