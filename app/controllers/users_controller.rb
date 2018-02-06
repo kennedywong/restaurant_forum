@@ -16,6 +16,10 @@ class UsersController < ApplicationController
     redirect_to user_path(@user)
   end
 
+    def index
+    @users = User.all
+  end
+
   private
 
   def set_user
@@ -25,5 +29,4 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :intro, :avatar)
   end
-
 end
