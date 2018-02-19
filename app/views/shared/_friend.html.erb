@@ -1,0 +1,7 @@
+<% if user != current_user %>
+  <% if current_user.friend?(user) %>
+    <%= link_to "取消好友", friendship_path(user), class: "btn btn-danger", method: :delete %>
+  <% else %>
+    <%= link_to "要求加入好友", friendships_path(friend_id: user), class: "btn btn-default", method: :post %>
+  <% end %>
+<% end %>

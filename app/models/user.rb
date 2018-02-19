@@ -26,7 +26,7 @@ class User < ApplicationRecord
   has_many :followers, through: :inverse_followships, source: :user
 
   has_many :friendships, dependent: :destroy
-  has_many :followings, through: :friendships
+  has_many :friends, through: :friendships
 
   # admin? 讓我們用來判斷單個user是否有 admin 角色，列如：current_user.admin?
   def admin?
@@ -36,4 +36,8 @@ class User < ApplicationRecord
   def following?(user)
     self.followings.include?(user)
   end
+
+  def friend?(user)
+    self.friends.include?(user)
+  end  
 end
