@@ -1,23 +1,43 @@
 class FriendshipsController < ApplicationController
 
-	def create
-    # 需要設定前端的 link_to，在發出請求時送進 following_id
-  	@friendship = current_user.friendships.build(friend_id: params[:friend_id])
-
+  def create
+    @friendship = current_user.unconfirm_friendships.build(friend_id: params[:friend_id])
     if @friendship.save
-      flash[:notice] = "申請好友成功"
-      redirect_back(fallback_location: root_path)
+      redirect_back fallback_location: root_path, notice: "申請好友成功"
     else
       flash[:alert] = @friendship.errors.full_messages.to_sentence
-      redirect_back(fallback_location: root_path)
+      redirect_back fallback_location: root_path
     end
   end
 
   def destroy
-    @friendship = current_user.friendships.where(friend_id: params[:id]).first
+    if current_user.friendships.empty? && current_user.inverse_friendships.empty?
+      if !current_user.unconfirm_friendships.empty?
+        @friendship = current_user.unconfirm_friendships.where(friend_id: params[:id]).first
+      end
+    else
+      if current_user.friendships.empty?
+        @friendship = current_user.inverse_friendships.where(user_id: params[:id]).first
+      else
+        @friendship = current_user.friendships.where(friend_id: params[:id]).first
+      end
+    end
     @friendship.destroy
     flash[:alert] = "刪除好友"
     redirect_back(fallback_location: root_path)
   end
 
+  def confirm
+    @friendship = current_user.request_friendships.where(user_id: params[:format]).first
+    @friendship.update(status: true)
+
+    redirect_back fallback_location: root_path
+  end
+
+  def reject
+    @friendship = current_user.request_friendships.where(user_id: params[:format]).first
+    @friendship.destroy
+
+    redirect_back fallback_location: root_path
+  end
 end

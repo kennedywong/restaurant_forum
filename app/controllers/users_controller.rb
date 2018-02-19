@@ -23,6 +23,12 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+  def friend_list
+    @friends = current_user.all_friends
+    @unconfirm_friends = current_user.unconfirm_friends
+    @request_friends = current_user.request_friends
+  end
+
   private
 
   def set_user

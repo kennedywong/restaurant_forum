@@ -63,3 +63,16 @@ a, a:link, a:visited, a:focus, a:hover, a:active{
   width: 128px;
   height: 128px;
 }
+
+.following-item {
+  margin-bottom: 10px;
+  p {
+    display: inline-block;
+  }
+}
+
+.button-center {
+  display: inline-block;
+  text-align: center;
+}
+

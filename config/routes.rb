@@ -28,10 +28,20 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, only: [:index, :show, :edit, :update]
+  resources :users, only: [:index, :show, :edit, :update] do
+    member do
+      get :friend_list
+    end
+  end
+  
   resources :followships, only: [:create, :destroy]
   
-  resources :friendships, only: [:create, :destroy]
+  resources :friendships, only: [:create, :destroy] do
+    member do
+      post :confirm
+      delete :reject
+    end
+  end
 
   resources :categories, only: :show
   root "restaurants#index"

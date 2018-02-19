@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20180218123213) do
     t.integer "friend_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "status", default: false
   end
 
   create_table "likes", force: :cascade do |t|
